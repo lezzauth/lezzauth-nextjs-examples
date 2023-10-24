@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@lezzauth/nextjs": "^0.0.4",
+    "@lezzauth/nextjs": "^0.0.5",
     "next": "13.5.6",
     "react": "^18",
     "react-dom": "^18"

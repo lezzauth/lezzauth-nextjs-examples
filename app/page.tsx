@@ -13,7 +13,7 @@ export default function Home() {
         <div className='flex w-full justify-end p-5'>
           <UserButton />
         </div>
-        <h1>Welcome back, <b> {`${user.firstName} ${user.lastName}`}</b></h1>
+        <h1>Welcome back, <b> {`${user.firstName || ''} ${user.lastName || ''}`}</b></h1>
         <h2>Your id : {user.id}</h2>
         <h2>Your email : {user.email}</h2>
         <div className='flex flex-col w-[400px]'>

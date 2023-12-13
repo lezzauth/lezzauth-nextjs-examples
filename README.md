@@ -1,36 +1,144 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Installation
 
-## Getting Started
+1. Clone this repository 
 
-First, run the development server:
+```bash
+git clone https://github.com/lezzauth/lezzauth-nextjs-examples.git
+```
+
+2. Install the package
+```bash
+yarn
+```
+
+or this :
+```bash
+npm i
+```
+
+# Setup
+1. Install lezzauth :
+```bash
+yarn add git+https://github.com/lezzauth/lezzauth.git
+```
+or, this
+```bash
+npm i git+https://github.com/lezzauth/lezzauth.git
+```
+
+2. Set up your `.env` or `.env.local` :
+```env
+# GET IT FROM OUR PLATFORM : https://staging.lezzauth.com
+
+NEXT_PUBLIC_LEZZAUTH_PUBLISHABLE_KEY=
+LEZZAUTH_SECRET_KEY=
+```
+
+3. Run this in your terminal, login with your account platform :
+```bash
+npx lezzauth login
+```
+
+4. Run this to generate the component :
+```bash
+npx lezzauth dev
+```
+
+5. Edit your `layout.tsx` file or other nextjs root file, mine look like this : 
+```ts
+"use client"
+
+import { LezzAuthProvider } from "lezzauth/nextjs";
+import './globals.css'
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element {
+  return (
+    <html lang="en">
+      <LezzAuthProvider publishableKey={process.env.NEXT_PUBLIC_LEZZAUTH_PUBLISHABLE_KEY!}>
+        <body>{children}</body>
+      </LezzAuthProvider>
+    </html>
+  );
+}
+```
+
+Inside `globals.css` mine look like this :
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+6. Open `next.config.js` and add this :
+```js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    transpilePackages: ["lezzauth"] // add this
+}
+
+module.exports = nextConfig
+```
+
+
+# Run your NextJS project ✨
+
+```bash
+yarn dev
+```
+or, this
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Partial
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can also custom per partial component, for example :
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## SignIn Partial
 
-## Learn More
+```ts
+"use client"
 
-To learn more about Next.js, take a look at the following resources:
+import { EmailInput, EmailLabel, PasswordInput, PasswordLabel, Button as SignInButton, SignInContainer, SignInProvider } from "@/lezzauth/_generated/components/sign-in";
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+export default function Page() {
+    return (
+        <SignInProvider>
+            <EmailLabel />
+            <EmailInput className="border-2 border-black" /> // you can also style with tailwind (don't forget to import .globals.css or other file that load your tailwind) 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+            <PasswordLabel />
+            <PasswordInput style={{ border: "2px solid black" }} /> // you can also custom the style
 
-## Deploy on Vercel
+            <SignInButton />
+        </SignInProvider>
+    )
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## SignUp Partial
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```ts
+"use client"
+
+import { EmailInput, EmailLabel, PasswordInput, PasswordLabel, Button as SignUpButton, SignUpContainer, SignUpProvider } from "@/lezzauth/_generated/components/sign-up";
+
+export default function Page() {
+    return (
+        <SignUpProvider>
+            <EmailLabel />
+            <EmailInput />
+
+            <PasswordLabel />
+            <PasswordInput />
+
+            <SignUpButton />
+        </SignUpProvider >
+    )
+}
+```
